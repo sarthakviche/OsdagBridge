@@ -127,6 +127,8 @@ Changing a value in `styles.py` restyles the whole report — a test (`test_chan
 * `IRC6_2017.cl_211_2_braking_force` raises `UnboundLocalError` for fewer than 3 design lanes (the old Chapter 3 swallowed it and printed "N/A").
 * `IRC6_2017.cl_208_3_impact_factor` tests `KEY_VEHICLE[1]` (a non-empty string, always truthy), so it always takes the tracked-vehicle branch (IM = 0.10 for 9–45 m spans) and the analysis applies that dynamic allowance to every vehicle, including wheeled and Class A vehicles.
 
+* `boq_generator.calculate_material_quantities` has no end-diaphragm quantity, so the steel chart shows End Diaphragms as "N/A" until the BOQ provides one (the chart picks up an `end_diaphragm_wt_total` key automatically).
+
 ## 8. Running the tests
 
 ```
