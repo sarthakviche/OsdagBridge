@@ -1,4 +1,12 @@
-def ch7_quantities(input_dict):
+from osdagbridge.core.reports import charts
+
+
+def ch7_quantities(input_dict, chart_dir=None):
+    """Chapter 7 LaTeX.  When *chart_dir* is given, the steel-tonnage and
+    concrete-vs-rebar charts are rendered into it and embedded after Table 7.1."""
+    figures_tex = ""
+    if chart_dir:
+        figures_tex = charts.figures_tex(charts.build_quantity_charts(input_dict, chart_dir))
     return r"""
 \chapter{Material Take-off \& Quantity Summary}
 \label{ch:material-takeoff}
@@ -6,7 +14,7 @@ def ch7_quantities(input_dict):
 \noindent\textbf{Table 7.1  Bill of Materials (Steel, Concrete, and Reinforcement Quantities)}
 
 \begingroup
-\setlength{\tabcolsep}{3.5pt}
+\osdagTabcolsepCompact
 \begin{longtable}{|C{1.0cm}|L{3.8cm}|C{2.6cm}|C{1.8cm}|C{1.8cm}|C{1.8cm}|C{1.8cm}|}
 \hline
 \textbf{S.N.} & \textbf{Item Description} & \textbf{Volume} & \textbf{Quantity} & \textbf{Total Volume} & \textbf{Weight (MT)} & \textbf{Total Weight (MT)} \\
@@ -28,6 +36,11 @@ def ch7_quantities(input_dict):
 6 & Crash Barrier & """ + str(input_dict.get("crash_barrier_vol_formula", "N.A.")) + r""" & """ + str(input_dict.get("crash_barrier_qty", "N.A.")) + r""" & """ + str(input_dict.get("crash_barrier_vol_total", "N.A.")) + r""" & """ + str(input_dict.get("crash_barrier_wt_single", "N.A.")) + r""" & """ + str(input_dict.get("crash_barrier_wt_total", "N.A.")) + r""" \\
 \hline
 \end{longtable}
-"""
+
+\osdagGap
+\section{Material Quantity Charts}
+\label{sec:quantity-charts}
+
+""" + figures_tex + "\n"
 
 

@@ -8,3 +8,4 @@ pydantic
 xarray
 ifcopenshell
 openpyxl
+pylatex>=1.4
